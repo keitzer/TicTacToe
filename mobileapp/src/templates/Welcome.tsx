@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 interface BoardProps {
   squares: string[];
@@ -9,28 +9,32 @@ interface BoardProps {
 const Board: React.FC<BoardProps> = ({ squares, onClick }) => {
   const renderSquare = (i: number) => {
     return (
-      <View style={styles.square}>
-        <Button title={squares[i] ?? ""} onPress={() => onClick(i)} />
+      <View className='bg-blue-200 flex-1'>
+        <TouchableOpacity className="bg-rose-100 grow items-center justify-center" onPress={() => onClick(i)}>
+          <Text>{squares[i] ?? ""}</Text>
+        </TouchableOpacity>
       </View>
     );
   };
 
   return (
-    <View style={styles.board}>
-      <View style={styles.row}>
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-      </View>
-      <View style={styles.row}>
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </View>
-      <View style={styles.row}>
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
+    <View className="flex-1 flex-row">
+      <View className="flex-1 bg-gray-300 divide-y">
+        <View className="flex-1 flex-row grow divide-x">
+          {renderSquare(0)}
+          {renderSquare(1)}
+          {renderSquare(2)}
+        </View>
+        <View className="flex-1 flex-row divide-x">
+          {renderSquare(3)}
+          {renderSquare(4)}
+          {renderSquare(5)}
+        </View>
+        <View className="flex-1 flex-row divide-x">
+          {renderSquare(6)}
+          {renderSquare(7)}
+          {renderSquare(8)}
+        </View>
       </View>
     </View>
   );
@@ -84,32 +88,11 @@ const Welcome: React.FC = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.status}>{status}</Text>
+    <View className="flex-1 justify-center items-center">
+      <Text className="m-8">{status}</Text>
       <Board squares={board} onClick={handleClick} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  status: {
-    marginBottom: 10,
-  },
-  board: {
-    flexDirection: 'column',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  square: {
-    width: 60,
-    height: 60,
-  },
-});
 
 export { Welcome };
