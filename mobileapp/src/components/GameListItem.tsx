@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Button } from 'react-native';
 import { Game } from '@/__generated__/graphql';
 
 interface GameListItemProps {
     game: Game;
-    onClick: (i: number) => void;
+    onClick: () => void;
 }
 
 const GameListItem: React.FC<GameListItemProps> = ({ game, onClick }) => {
     return (
         <View>
-            <Text>{game.id}</Text>
+            <Button title={game.id} onPress={() => onClick()} />
         </View>
     );
 };
