@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import { useQuery } from '@apollo/client';
 import client from '@/server/apollo';
 import { GAME_LIST } from '@/server/queries';
+import { useNavigation } from '@react-navigation/native';
 
 const GameList: React.FC = () => {
-    const { loading, error, data } = useQuery(GAME_LIST, { client });
+    // const [games, setGames] = useState<GameData[]>([]);
+    const { loading, error, data, refetch } = useQuery(GAME_LIST, { client });
 
     if (loading) return <Text>Loading...</Text>;
     if (error) return <Text>Error: {error.message}</Text>;
 
+    const navigation = useNavigation();
+
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <Button title="Refresh" onPress={() => { refetch() }} />
+            ),
+        });
+    }, [navigation]);
+
     return (
         <View>
-            <Text>Data from GraphQL Server:</Text>
+            <Text>Data fFrom GraphQL Server:</Text>
             <Text>{JSON.stringify(data, null, 2)}</Text>
         </View>
     );

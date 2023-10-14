@@ -1,6 +1,6 @@
-import { ApolloClient, InMemoryCache, createHttpLink, split } from '@apollo/client';
-import { WebSocketLink } from '@apollo/client/link/ws';
-import { getMainDefinition } from '@apollo/client/utilities';
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+// import { WebSocketLink } from '@apollo/client/link/ws';
+// import { getMainDefinition } from '@apollo/client/utilities';
 
 const httpLink = createHttpLink({
     uri: 'http://10.0.0.98:4000', // Replace with your GraphQL HTTP server URL

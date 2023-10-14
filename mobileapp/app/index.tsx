@@ -6,12 +6,10 @@ import GameList from '@/templates/GameList/GameList';
 const Stack = createNativeStackNavigator();
 
 const Home = () => (
-  <>
-    <Stack.Navigator>
-      <Stack.Screen name="Game List" component={GameList} />
-      <Stack.Screen name="Game" component={Game} />
-    </Stack.Navigator>
-  </>
+  <Stack.Navigator>
+    <Stack.Screen name="Game List" component={GameList} />
+    <Stack.Screen name="Game" component={Game} />
+  </Stack.Navigator>
 );
 
 export default Home;
