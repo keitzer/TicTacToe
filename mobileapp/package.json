@@ -24,12 +24,14 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.5",
     "expo": "^49.0.5",
     "expo-constants": "~14.4.2",
     "expo-linking": "~5.0.2",
     "expo-router": "2.0.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
+    "graphql": "^16.8.1",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-native": "0.72.5",

@@ -1,15 +1,16 @@
-import { Stack } from 'expo-router';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Game from '@/templates/Game/Game';
+import GameList from '@/templates/GameList/GameList';
 
-import { Welcome } from '@/templates/Welcome';
+const Stack = createNativeStackNavigator();
 
 const Home = () => (
   <>
-    <Stack.Screen
-      options={{
-        title: 'My home',
-      }}
-    />
-    <Welcome />
+    <Stack.Navigator>
+      <Stack.Screen name="Game List" component={GameList} />
+      <Stack.Screen name="Game" component={Game} />
+    </Stack.Navigator>
   </>
 );
 
