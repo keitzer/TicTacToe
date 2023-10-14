@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client';
+import { gql } from '@/__generated__/gql';
 
-export const GAME_LIST = gql`
+export const GAME_LIST = gql(`
   query GetListOfGames {
     games {
       id
@@ -10,4 +10,4 @@ export const GAME_LIST = gql`
       }
     }
   }  
-`;
+`);

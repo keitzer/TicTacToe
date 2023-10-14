@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, FlatList } from 'react-native';
 import { useQuery } from '@apollo/client';
 import client from '@/server/apollo';
 import { GAME_LIST } from '@/server/queries';
@@ -24,8 +24,15 @@ const GameList: React.FC = () => {
 
     return (
         <View>
-            <Text>Data fFrom GraphQL Server:</Text>
-            <Text>{JSON.stringify(data, null, 2)}</Text>
+            <Text>Data from GraphQL Server:</Text>
+            <FlatList
+                data={data?.games}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                    <Text>{item.id}</Text>
+                    // <TaskItem task={item} onComplete={removeTask} />
+                )}
+            />
         </View>
     );
 };
