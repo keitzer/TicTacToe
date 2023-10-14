@@ -61,7 +61,7 @@ const typeDefs = `#graphql
 const resolvers = {
     Query: {
         games: () => Object.values(games),
-        game: (parent, args) => games[args.id],
+        game: (_, args) => games[args.id],
     },
 
     Mutation: {
@@ -127,7 +127,7 @@ const resolvers = {
 
     Subscription: {
         gameUpdated: {
-            subscribe: (parent, { gameId }) => {
+            subscribe: (_, { gameId }) => {
                 if (!subscribers[gameId]) {
                     subscribers[gameId] = [];
                 }
