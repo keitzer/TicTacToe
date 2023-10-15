@@ -3,12 +3,12 @@ import { View, Text } from 'react-native';
 import { useQuery, useSubscription } from '@apollo/client';
 import client from '@/server/apollo';
 import { GAME_UPDATED } from '@/server/subscriptions';
-import { GAME_LIST } from '@/server/queries';
 import Board from '@/components/Board';
 
 const Game: React.FC = () => {
   const [board, setBoard] = useState<string[]>(Array(9).fill(''));
   const [xIsNext, setXIsNext] = useState<boolean>(true);
+
 
   const calculateWinner = (squares: string[]) => {
     const lines: number[][] = [

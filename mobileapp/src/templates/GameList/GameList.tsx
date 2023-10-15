@@ -1,36 +1,59 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Button, FlatList } from 'react-native';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import client from '@/server/apollo';
 import { GAME_LIST } from '@/server/queries';
+import { CREATE_GAME } from '@/server/mutations';
 import GameListItem from '@/components/GameListItem';
 import { Game } from '@/__generated__/graphql';
 import { Stack, useRouter } from 'expo-router';
-
+import { useGlobalState } from '@/state/GlobalState';
 
 const GameList: React.FC = () => {
     const router = useRouter();
-    const { loading, error, data, refetch } = useQuery(GAME_LIST, { client });
+    const { dispatch } = useGlobalState();
+    const [createGame, { loading: createLoading }] = useMutation(CREATE_GAME, { client });
+    const { loading: listLoading, error: listError, data: listData, refetch: refetchList } = useQuery(GAME_LIST, { client });
 
-    if (loading) return <Text>Loading...</Text>;
-    if (error) return <Text>Error: {error.message}</Text>;
+    if (listLoading || createLoading) return <Text>Loading...</Text>;
+    if (listError) return <Text>Error: {listError.message}</Text>;
+
+    const createNewGame = () => {
+        let newGameId = "";
+        createGame({
+            variables: {
+                playerId: "1",
+            },
+        })
+            .then((response) => {
+                newGameId = response.data?.createGame?.id ?? "";
+                return refetchList();
+            })
+            .then((_) => pushToGameWithId(newGameId));
+    }
+
+    const pushToGameWithId = (id: string) => {
+        dispatch({ type: 'SET_CURRENT_GAME', id: id });
+        router.push({ pathname: "game" });
+    }
 
     return (
-        <View>
+        <>
             <Stack.Screen
                 options={{
                     title: "List of Active Games",
-                    headerRight: () => <Button title="Refresh" onPress={() => { refetch() }} />,
+                    headerLeft: () => <Button title="Refresh" onPress={() => { refetchList() }} />,
+                    headerRight: () => <Button title="Create" onPress={() => { createNewGame() }} />,
                 }}
             />
             <FlatList
-                data={data?.games}
+                data={listData?.games}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <GameListItem game={item as Game} onClick={() => { router.push({ pathname: "game" }) }} />
+                    <GameListItem game={item as Game} onClick={() => pushToGameWithId(item.id)} />
                 )}
             />
-        </View>
+        </>
     );
 };
 
