@@ -1,7 +1,7 @@
-import Game from "@/templates/Game/Game";
+import GameBoard from "@/templates/Game/GameBoard";
 
 const Page = () => (
-    <Game />
+    <GameBoard />
 );
 
 export default Page;

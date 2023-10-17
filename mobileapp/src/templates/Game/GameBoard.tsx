@@ -1,14 +1,30 @@
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
-import { useQuery, useSubscription } from '@apollo/client';
+// import { useQuery, useSubscription } from '@apollo/client';
 import client from '@/server/apollo';
-import { GAME_UPDATED } from '@/server/subscriptions';
+// import { GAME_UPDATED } from '@/server/subscriptions';
 import Board from '@/components/Board';
+import { GET_GAME_FRAGMENT } from '@/server/queries';
+import { useGlobalState } from '@/state/GlobalState';
+import { Game } from '@/__generated__/graphql';
 
-const Game: React.FC = () => {
+const GameBoard: React.FC = () => {
+  const { state } = useGlobalState();
+  const gameId = "Game:" + state.currentGame;
+  console.log(gameId);
+  // const game = client.readQuery({ query: GET_GAME, variables: { gameId: "Game:" + state.currentGame } });
+  const game = client.readFragment<Game>({
+    id: gameId,
+    fragment: GET_GAME_FRAGMENT,
+  });
+
+  console.log(game);
+  if (game === undefined || game === null) {
+    return (<Text>Whoops! Game cannot be found. Please try again.</Text>);
+  }
+
   const [board, setBoard] = useState<string[]>(Array(9).fill(''));
   const [xIsNext, setXIsNext] = useState<boolean>(true);
-
 
   const calculateWinner = (squares: string[]) => {
     const lines: number[][] = [
@@ -61,4 +77,4 @@ const Game: React.FC = () => {
   );
 };
 
-export default Game;
+export default GameBoard;

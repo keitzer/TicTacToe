@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { View, Text, Button, FlatList } from 'react-native';
+import React from 'react';
+import { Text, Button, FlatList } from 'react-native';
 import { useQuery, useMutation } from '@apollo/client';
 import client from '@/server/apollo';
 import { GAME_LIST } from '@/server/queries';

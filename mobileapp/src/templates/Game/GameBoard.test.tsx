@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react-native';
 
-import Game from './Game';
+import GameBoard from './GameBoard';
 
 describe('App component', () => {
   describe('Render method', () => {
     it('should render the default text', () => {
-      render(<Game />);
+      render(<GameBoard />);
 
       const text = screen.queryByText(/Open up App\//);
       expect(text).toBeVisible();
